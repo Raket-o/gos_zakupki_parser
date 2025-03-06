@@ -63,7 +63,10 @@ class GetTenderDatetimePublishedTask(Task):
 
             for value in xmltodict.parse(response.text).values():
                 datetime_published = value.get("commonInfo").get("publishDTInEIS")
-                set_datetime_published.add(f"{url} - {datetime_published}")
+                if datetime_published:
+                    set_datetime_published.add(f"{url} - {datetime_published}")
+                else:
+                    set_datetime_published.add(None)
 
         return set_datetime_published
 
