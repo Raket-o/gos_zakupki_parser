@@ -3,6 +3,7 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
+    restart: always
     ports:
       - "6379:6379"
     networks:
@@ -12,12 +13,23 @@ services:
   celery_worker:
     build: .
     container_name: celery_worker
+    restart: always
     command: celery -A tasks worker --loglevel=INFO
     depends_on:
       - redis
     networks:
       gos_zakaz_parser:
         ipv4_address: 192.168.55.5
+
+  parser:
+    build: .
+    container_name: parser
+    command: python main.py
+    depends_on:
+      - celery_worker
+    networks:
+      gos_zakaz_parser:
+        ipv4_address: 192.168.55.6
 
 networks:
   gos_zakaz_parser:

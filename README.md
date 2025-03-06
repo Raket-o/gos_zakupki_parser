@@ -12,20 +12,6 @@
 
 ---
 ## Запуск программы
-### <img src="images_readme/win_logo.png" width="60" alt="Windows"/> Запуск на Windows (при установленном python):
-Открываем терминал, переходим в корневую папку с ботом
-1. Создаём окружение ```python -m venv venv```
-2. Активируем окружение ```venv\Scripts\activate.bat```
-3. Устанавливаем зависимости ```FOR /F %x IN (requirements.txt) DO ( IF NOT # == %x ( pip install %x ) )```
-4. Запускаем командой из терминала ```python main.py```
-
-### <img src="images_readme/linux_logo.png" width="40" alt="Linux"/> Запуск на Linux (при установленном python):
-Открываем терминал, переходим в корневую папку с ботом
-1. Создаём окружение ```python3 -m venv venv```   
-2. Активируем окружение source ```source venv/bin/activate```
-3. Устанавливаем зависимости ```pip install -r requirements.txt```
-4. Запускаем командой из терминала ```python main.py```
-
 ### <img src="images_readme/docker.svg" width="40" alt="docker"/> Запуск черех docker.
 Запуск через Docker-compose:
 Открываем терминал, переходим в корневую папку с проектом:
@@ -43,11 +29,12 @@
 
 Пример вывода:
 ```
-https://zakupki.gov.ru/epz/order/notice/printForm/viewXml.html?regNumber=0838300001225000003 - 2025-03-06T21:32:03.009+12:00
-https://zakupki.gov.ru/epz/order/notice/printForm/viewXml.html?regNumber=0361200001225000031 - 2025-03-06T21:38:05.907+11:00
-https://zakupki.gov.ru/epz/order/notice/printForm/viewXml.html?regNumber=0338200002225000092 - 2025-03-06T16:38:27.606+12:00
-https://zakupki.gov.ru/epz/order/notice/printForm/viewXml.html?regNumber=0838500000325000004 - 2025-02-25T17:12:09.785+12:00
-https://zakupki.gov.ru/epz/order/notice/printForm/viewXml.html?regNumber=0322200001225000204 - 2025-03-03T17:41:54.258+10:00
+https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0338300047925000011 - 2025-02-27T12:21:53.164+12:00
+https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0547600000825000001 - 2025-03-07T00:04:48.674+11:00
+https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0322200030725000009 - 2025-03-01T18:51:00.597+10:00
+https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0322200001225000218 - 2025-03-03T17:40:00.631+10:00
+https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0322200001225000203 - 2025-03-03T17:42:31.901+10:00
+https://zakupki.gov.ru/epz/order/notice/printForm/view.html?regNumber=0322200001225000204 - 2025-03-03T17:41:54.258+10:00
 ```
 Если поле `publishDTInEIS` отсутствует в XML-файле, будет выведено `None`.
 

@@ -30,9 +30,7 @@ class GetTenderUrlsTask(Task):
         :param number_page: Номер страницы с которой нужно вытащить url тендера.
         :return: Возвращает множество с url тендеров.
         """
-        # pattern = r'view\.html'
-        # replacement = 'viewXml.html'
-        set_auctions_xml = set()
+        set_auctions_xml = []
         response = requests.get(url=f"{URL_PARSER}{number_page}", headers=HEADERS, timeout=5)
         bs = BeautifulSoup(response.text, 'lxml')
         items = bs.find_all(class_="w-space-nowrap ml-auto registry-entry__header-top__icon")
@@ -41,14 +39,15 @@ class GetTenderUrlsTask(Task):
             urls = item.find_all("a", {"target": "_blank"})
 
             for url in urls:
-                set_auctions_xml.add(f"{URL_PARENT}{url.get('href')}")
+                set_auctions_xml.append(f"{URL_PARENT}{url.get('href')}")
 
         return set_auctions_xml
 
 
 class GetTenderDatetimePublishedTask(Task):
     """Задача парсинга данных из XML-форм."""
-    def run(self, set_urls: set[str]) -> set[str]:
+    # def run(self, set_urls: set[str]) -> set[str]:
+    def run(self, set_urls):
         """
         Функция в параметрах получает множество с url тендеров и
         отправляет GET запрос, далее парсит xml форму, вытаскивает
@@ -58,7 +57,7 @@ class GetTenderDatetimePublishedTask(Task):
         """
         pattern = r'view\.html'
         replacement = 'viewXml.html'
-        set_datetime_published = set()
+        set_datetime_published = []
         for url in set_urls:
             url_to_xml = re.sub(pattern, replacement, url)
             response = requests.get(url_to_xml, headers=HEADERS, timeout=5)
@@ -66,9 +65,9 @@ class GetTenderDatetimePublishedTask(Task):
             for value in xmltodict.parse(response.text).values():
                 datetime_published = value.get("commonInfo").get("publishDTInEIS")
                 if datetime_published:
-                    set_datetime_published.add(f"{url} - {datetime_published}")
+                    set_datetime_published.append(f"{url} - {datetime_published}")
                 else:
-                    set_datetime_published.add(None)
+                    set_datetime_published.append(None)
 
         return set_datetime_published
 
