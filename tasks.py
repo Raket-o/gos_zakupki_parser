@@ -30,8 +30,8 @@ class GetTenderUrlsTask(Task):
         :param number_page: Номер страницы с которой нужно вытащить url тендера.
         :return: Возвращает множество с url тендеров.
         """
-        pattern = r'view\.html'
-        replacement = 'viewXml.html'
+        # pattern = r'view\.html'
+        # replacement = 'viewXml.html'
         set_auctions_xml = set()
         response = requests.get(url=f"{URL_PARSER}{number_page}", headers=HEADERS, timeout=5)
         bs = BeautifulSoup(response.text, 'lxml')
@@ -41,8 +41,7 @@ class GetTenderUrlsTask(Task):
             urls = item.find_all("a", {"target": "_blank"})
 
             for url in urls:
-                result = re.sub(pattern, replacement, url.get("href"))
-                set_auctions_xml.add(f"{URL_PARENT}{result}")
+                set_auctions_xml.add(f"{URL_PARENT}{url.get('href')}")
 
         return set_auctions_xml
 
@@ -57,9 +56,12 @@ class GetTenderDatetimePublishedTask(Task):
         :param set_urls: Множество с url тендеров.
         :return: Возвращает множество с (url - время создания тендера).
         """
+        pattern = r'view\.html'
+        replacement = 'viewXml.html'
         set_datetime_published = set()
         for url in set_urls:
-            response = requests.get(url, headers=HEADERS, timeout=5)
+            url_to_xml = re.sub(pattern, replacement, url)
+            response = requests.get(url_to_xml, headers=HEADERS, timeout=5)
 
             for value in xmltodict.parse(response.text).values():
                 datetime_published = value.get("commonInfo").get("publishDTInEIS")
