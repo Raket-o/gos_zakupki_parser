@@ -30,8 +30,8 @@
 Запуск через Docker-compose:
 Открываем терминал, переходим в корневую папку с проектом:
 
-1. Создаём образ командой ```docker-compose -p app_fastapi_postgres build```
-2. Поднимаем контейнер ```docker-compose -p app_fastapi_postgres up```
+1. Создаём образ командой ```docker-compose build```
+2. Поднимаем контейнер ```docker-compose up```
 
 
 ---
